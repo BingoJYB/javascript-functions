@@ -17,8 +17,8 @@ describe("Conway's Game of Life", () => {
 
       assert(
         gameoflife.seed &&
-          Array.isArray(gameoflife.seed([1, 2], [5, 6])) &&
-          gameoflife.seed([1, 2], [5, 6]).length === 2,
+        Array.isArray(gameoflife.seed([1, 2], [5, 6])) &&
+        gameoflife.seed([1, 2], [5, 6]).length === 2,
         "Have you converted `arguments` to a real array?"
       );
     });
@@ -32,13 +32,13 @@ describe("Conway's Game of Life", () => {
       );
 
       var sameNode;
-      esprima.parseModule(source, {}, function(node) {
+      esprima.parseModule(source, {}, function (node) {
         if (node.id && node.id.name === "same") {
           sameNode = node;
         }
       });
       assert.equal(
-        sameNode.params.length, 
+        sameNode.params.length,
         2,
         "Have you created a `same` function with two arguments?"
       );
@@ -61,23 +61,23 @@ describe("Conway's Game of Life", () => {
         "Have you created and exported a `contains` function?"
       );
 
-      const boundContains = (gameoflife.contains || (() => {})).bind([
+      const boundContains = (gameoflife.contains || (() => { })).bind([
         [1, 2],
         [3, 4],
         [4, 4]
       ]);
-      assert(        
-          boundContains([1, 2]) &&
-          boundContains([3, 4]) &&
-          boundContains([4, 4]),
+      assert(
+        boundContains([1, 2]) &&
+        boundContains([3, 4]) &&
+        boundContains([4, 4]),
         "Have you implemented a check that the passed cell is in the passed game state?"
       );
       assert(
-          !(
-            boundContains([5, 6]) ||
-            boundContains([2, 1]) ||
-            boundContains([3, 3])
-          ),
+        !(
+          boundContains([5, 6]) ||
+          boundContains([2, 1]) ||
+          boundContains([3, 3])
+        ),
         "Have you implemented a check that the passed cell is in the passed game state?"
       );
     });
@@ -92,26 +92,26 @@ describe("Conway's Game of Life", () => {
 
       assert.equal(
         trimOfWhitespace(gameoflife.printCell(
+          [1, 1],
+          [
             [1, 1],
-            [
-              [1, 1],
-              [2, 2]
-            ]
-          )
+            [2, 2]
+          ]
+        )
         ),
         "\u25A3",
         "Have you returned '\u25A3' for living cells?"
       );
       assert.equal(
         trimOfWhitespace(gameoflife.printCell(
-            [1, 2],
-            [
-              [1, 1],
-              [2, 2]
-            ]
-          )
-         ),
-         "\u25A2",
+          [1, 2],
+          [
+            [1, 1],
+            [2, 2]
+          ]
+        )
+        ),
+        "\u25A2",
         "Have you returned '\u25A2' for non-living cells?"
       );
     });
@@ -132,17 +132,17 @@ describe("Conway's Game of Life", () => {
         "Have you created and exported a `corners` function?"
       );
 
-      const zeroCorners = ((gameoflife.corners || (() => ({topRight: [], bottomLeft: []})))()) || {topRight: [], bottomLeft: []};
+      const zeroCorners = ((gameoflife.corners || (() => ({ topRight: [], bottomLeft: [] })))()) || { topRight: [], bottomLeft: [] };
       assert(
         gameoflife.same &&
-          gameoflife.corners &&
-          gameoflife.same(zeroCorners.topRight, [0, 0]),
+        gameoflife.corners &&
+        gameoflife.same(zeroCorners.topRight, [0, 0]),
         "Have you ensured that topRight is [0,0] if there are no living cells?"
       );
       assert(
         gameoflife.same &&
-          gameoflife.corners &&
-          gameoflife.same(zeroCorners.bottomLeft, [0, 0]),
+        gameoflife.corners &&
+        gameoflife.same(zeroCorners.bottomLeft, [0, 0]),
         "Have you ensured that botomLeft is [0,0] if there are no living cells?"
       );
 
@@ -152,8 +152,8 @@ describe("Conway's Game of Life", () => {
 
       assert(
         gameoflife.same &&
-          gameoflife.corners &&
-          gameoflife.same(corners.topRight, [4, 3]),
+        gameoflife.corners &&
+        gameoflife.same(corners.topRight, [4, 3]),
         "Have you implemented a corners function that returns the correct top right coordinate?"
       );
 
@@ -163,13 +163,13 @@ describe("Conway's Game of Life", () => {
 
       assert(
         gameoflife.same &&
-          gameoflife.corners &&
-          gameoflife.same(corners.bottomLeft, [1, 1]),
+        gameoflife.corners &&
+        gameoflife.same(corners.bottomLeft, [1, 1]),
         "Have you implemented a corners function that returns the correct bottom left coordinate?"
       );
 
       var cornersNode;
-      esprima.parseModule(source, {}, function(node) {
+      esprima.parseModule(source, {}, function (node) {
         if (
           (node.type === "VariableDeclarator" ||
             node.type === "FunctionDeclaration") &&
@@ -181,8 +181,8 @@ describe("Conway's Game of Life", () => {
       });
       assert(
         typeof cornersNode != "undefined" &&
-          (cornersNode.params || cornersNode.init.params)[0].type ==
-            "AssignmentPattern",
+        (cornersNode.params || cornersNode.init.params)[0].type ==
+        "AssignmentPattern",
         "Have you provided a default value for the 'corners' function parameter?"
       );
     });
@@ -203,9 +203,9 @@ describe("Conway's Game of Life", () => {
         "Have you created a 'printCells' function that prints '▣' for each living cell, '▢' for each non-living cell and a newline character at the end of each row?"
       );
       assert.equal(trimOfWhitespace(gameoflife.printCells([
-          [3, 2],
-          [5, 2]
-        ])), trimOfWhitespace("▣ ▢ \n ▣\n"),
+        [3, 2],
+        [5, 2]
+      ])), trimOfWhitespace("▣ ▢ \n ▣\n"),
         "Have you created a 'printCells' function that prints '▣' for each living cell, '▢' for each non-living cell, a space in between each cell and a newline character at the end of each row?"
       );
       assert(
@@ -215,7 +215,7 @@ describe("Conway's Game of Life", () => {
           [3, 3],
           [3, 4],
           [4, 4]
-        ])), 
+        ])),
         "▢ ▣ ▣\n▣ ▣ ▢\n▢ ▣ ▢\n",
         "Have you created a 'printCells' function that prints '▣' for each living cell, '▢' for each non-living cell, a space in between each cell and a newline character at the end of each row?"
       );
@@ -238,13 +238,13 @@ describe("Conway's Game of Life", () => {
 
       assert(
         gameoflife.contains.call(neighborsOf3Comma4, [2, 4]) &&
-          gameoflife.contains.call(neighborsOf3Comma4, [4, 4]) &&
-          gameoflife.contains.call(neighborsOf3Comma4, [2, 3]) &&
-          gameoflife.contains.call(neighborsOf3Comma4, [3, 3]) &&
-          gameoflife.contains.call(neighborsOf3Comma4, [4, 3]) &&
-          gameoflife.contains.call(neighborsOf3Comma4, [2, 5]) &&
-          gameoflife.contains.call(neighborsOf3Comma4, [3, 5]) &&
-          gameoflife.contains.call(neighborsOf3Comma4, [4, 5]),
+        gameoflife.contains.call(neighborsOf3Comma4, [4, 4]) &&
+        gameoflife.contains.call(neighborsOf3Comma4, [2, 3]) &&
+        gameoflife.contains.call(neighborsOf3Comma4, [3, 3]) &&
+        gameoflife.contains.call(neighborsOf3Comma4, [4, 3]) &&
+        gameoflife.contains.call(neighborsOf3Comma4, [2, 5]) &&
+        gameoflife.contains.call(neighborsOf3Comma4, [3, 5]) &&
+        gameoflife.contains.call(neighborsOf3Comma4, [4, 5]),
         "Have you created a function 'getNeighborsOf' that returns the eight neighbors of the given cell?"
       );
 
@@ -252,13 +252,13 @@ describe("Conway's Game of Life", () => {
 
       assert(
         gameoflife.contains.call(neighborsOfNeg1Neg1, [-2, -1]) &&
-          gameoflife.contains.call(neighborsOfNeg1Neg1, [0, -1]) &&
-          gameoflife.contains.call(neighborsOfNeg1Neg1, [-2, -2]) &&
-          gameoflife.contains.call(neighborsOfNeg1Neg1, [-1, -2]) &&
-          gameoflife.contains.call(neighborsOfNeg1Neg1, [0, -2]) &&
-          gameoflife.contains.call(neighborsOfNeg1Neg1, [-2, 0]) &&
-          gameoflife.contains.call(neighborsOfNeg1Neg1, [-1, 0]) &&
-          gameoflife.contains.call(neighborsOfNeg1Neg1, [0, 0]),
+        gameoflife.contains.call(neighborsOfNeg1Neg1, [0, -1]) &&
+        gameoflife.contains.call(neighborsOfNeg1Neg1, [-2, -2]) &&
+        gameoflife.contains.call(neighborsOfNeg1Neg1, [-1, -2]) &&
+        gameoflife.contains.call(neighborsOfNeg1Neg1, [0, -2]) &&
+        gameoflife.contains.call(neighborsOfNeg1Neg1, [-2, 0]) &&
+        gameoflife.contains.call(neighborsOfNeg1Neg1, [-1, 0]) &&
+        gameoflife.contains.call(neighborsOfNeg1Neg1, [0, 0]),
         "Have you created a function 'getNeighborsOf' that returns the eight neighbors of the given cell?"
       );
     });
@@ -290,9 +290,9 @@ describe("Conway's Game of Life", () => {
 
       assert(
         gameoflife.contains.call(rPentominoNeighborsOfFourThree, [4, 4]) &&
-          gameoflife.contains.call(rPentominoNeighborsOfFourThree, [3, 4]) &&
-          gameoflife.contains.call(rPentominoNeighborsOfFourThree, [3, 3]) &&
-          gameoflife.contains.call(rPentominoNeighborsOfFourThree, [3, 2]),
+        gameoflife.contains.call(rPentominoNeighborsOfFourThree, [3, 4]) &&
+        gameoflife.contains.call(rPentominoNeighborsOfFourThree, [3, 3]) &&
+        gameoflife.contains.call(rPentominoNeighborsOfFourThree, [3, 2]),
         "Have you created a function 'getLivingNeighbors' that returns the living neighbors of the given cell?"
       );
 
@@ -355,9 +355,9 @@ describe("Conway's Game of Life", () => {
       assert(
         gameoflife.calculateNext,
         "Have you created and exported a 'calculateNext' function?"
-        );
+      );
       const next = gameoflife.calculateNext(gameoflife.seed([3, 2], [2, 3], [3, 3], [3, 4], [4, 4]));
-        
+
       assert(
         containsAll(
           [
@@ -520,8 +520,8 @@ describe("Conway's Game of Life", () => {
         gameoflife.main("rpentomino", 2);
       }, logger);
 
-      assert.equal(trimOfWhitespace(results), 
-          trimOfWhitespace("▢ ▣ ▣\n▣ ▣ ▢\n▢ ▣ ▢\n▣ ▣ ▣\n▣ ▢ ▢\n▣ ▣ ▢\n▢ ▢ ▣ ▢\n▢ ▣ ▣ ▢\n▣ ▢ ▢ ▣\n▢ ▣ ▣ ▢\n"),
+      assert.equal(trimOfWhitespace(results),
+        trimOfWhitespace("▢ ▣ ▣\n▣ ▣ ▢\n▢ ▣ ▢\n▣ ▣ ▣\n▣ ▢ ▢\n▣ ▣ ▢\n▢ ▢ ▣ ▢\n▢ ▣ ▣ ▢\n▣ ▢ ▢ ▣\n▢ ▣ ▣ ▢\n"),
         "Have you created a 'main' function ?"
       );
     });

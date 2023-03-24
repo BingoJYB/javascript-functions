@@ -10,10 +10,10 @@ const source = fs.readFileSync(path.join(process.cwd(), 'js/gameoflife.js'), 'ut
 const ast = jscs(source);
 
 jscs.registerMethods({
-  findConditional: function() {
+  findConditional: function () {
     return this.find(jscs.ConditionalExpression);
   },
-  findCall: function(name) {
+  findCall: function (name) {
     return this.find(jscs.CallExpression).filter(path => {
       let callee_name = '';
       if (path.value.callee.type === 'Identifier') {
@@ -24,24 +24,24 @@ jscs.registerMethods({
       return (callee_name === name) ? true : false;
     });
   },
-  findAssignment: function(name) {
+  findAssignment: function (name) {
     return this.find(jscs.AssignmentExpression);
   },
-  findIdentifier: function(name) {
+  findIdentifier: function (name) {
     return this.find(jscs.Identifier, { name: name });
   },
-  findPropertyAssignment: function(obj, property) {
+  findPropertyAssignment: function (obj, property) {
     return this.find(jscs.AssignmentExpression).filter(path => {
       if (path.value.left.type === 'MemberExpression' &&
-          path.value.left.object.name === obj &&
-          path.value.left.property.name === property) {
+        path.value.left.object.name === obj &&
+        path.value.left.property.name === property) {
         return true;
       } else {
         return false;
       }
     });
   },
-  findSides: function(operator) {
+  findSides: function (operator) {
     const element = this.find(jscs.BinaryExpression, { operator: operator });
     if (element.length) {
       const left_side = element.get().value.left;
@@ -52,7 +52,7 @@ jscs.registerMethods({
       return false;
     }
   },
-  findIdentifierParent: function(name) {
+  findIdentifierParent: function (name) {
     const element = this.find(jscs.Identifier, { name: name });
     if (element.length) {
       const parent = element.get().parent.value
@@ -70,17 +70,17 @@ jscs.registerMethods({
       return false;
     }
   },
-  returnParent: function(name) {
+  returnParent: function (name) {
     const element = this.find(jscs.Identifier, { name: name });
     return (element.length) ? jscs(element.get().parent) : [];
   },
-  findBinary: function() {
+  findBinary: function () {
     return this.find(jscs.BinaryExpression);
   },
-  findReturn: function() {
+  findReturn: function () {
     return this.find(jscs.ReturnStatement);
   },
-  findIf: function() {
+  findIf: function () {
     const element = this.find(jscs.IfStatement);
     return (element.length) ? element.get().value : [];
   },
